@@ -1,25 +1,14 @@
-const express = require("express");
-const getUser = require("../Controller/UserRouteControllers/UserControllerGetUser");
-const deleteUser = require("../Controller/UserRouteControllers/UserControllerDeleteUser")
+import express from 'express'
+import { deleteUser, followUser, getAllUsers, getUser, unfollowUser, updateUser } from '../controllers/UserController.js'
+import authMiddleWare from '../middleware/AuthMiddleware.js';
 
 const router = express.Router()
 
-router.get('/getUser/:username',(req,res)=>{
-    getUser(req,(err,result)=>{
-        if(err){
-            return err
-        }
-        res.send(result)
-    })
-})
+router.get('/:id', getUser);
+router.get('/',getAllUsers)
+router.put('/:id',authMiddleWare, updateUser)
+router.delete('/:id',authMiddleWare, deleteUser)
+router.put('/:id/follow',authMiddleWare, followUser)
+router.put('/:id/unfollow',authMiddleWare, unfollowUser)
 
-router.delete('/deleteUser/:username',(req,res)=>{
-    deleteUser(req,(err,result)=>{
-        if(err){
-            return err
-        }
-        res.send(result)
-    })
-})
-
-module.exports = router;
+export default router

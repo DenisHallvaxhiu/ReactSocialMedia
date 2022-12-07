@@ -1,25 +1,10 @@
-const express = require("express");
-const register = require("../Controller/AuthRouteControllers/AuthRegister");
-const login = require("../Controller/AuthRouteControllers/AuthLogin");
+import express from 'express';
+import { loginUser, registerUser } from '../controllers/AuthController.js';
 
-const router = express.Router();
+const router = express.Router()
 
-router.post("/register", (req, res) => {
-  register(req,(err, result) => {
-    if (err) {
-      return err;
-    }
-    res.send(result);
-  });
-});
 
-router.post("/login", (req, res) => {
-  login(req,(err,result)=>{
-    if(err){
-      return err
-    }
-    res.send(result)
-  })
-});
+router.post('/register', registerUser)
+router.post('/login', loginUser)
 
-module.exports = router;
+export default router
